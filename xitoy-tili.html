@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>汉语 – Xitoy tilini 3 oyda o'rganing</title>
+<style>
+:root{--bg:#faf7f2;--card:#fff;--ink:#222;--mut:#6b6b6b;--red:#c8102e;--gold:#e0a526;--line:#e6dfd3;--ok:#1b9e5a;--bad:#d64545}
+@media (prefers-color-scheme:dark){:root{--bg:#171513;--card:#232019;--ink:#f1ece4;--mut:#a79f92;--line:#383329;--red:#ff5a6e}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{background:var(--red);color:#fff;padding:14px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+header h1{margin:0;font-size:20px}
+header .sp{display:flex;align-items:center;gap:8px;font-size:13px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:8px 14px;border-radius:20px;font-size:14px;cursor:pointer}
+nav button.on{background:var(--red);color:#fff;border-color:var(--red)}
+main{max-width:980px;margin:0 auto;padding:14px 12px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+h2{margin:6px 0 10px;font-size:20px}h3{margin:10px 0 6px;font-size:16px}
+.warn{background:#fff3cd;color:#664d03;border:1px solid #ffe69c;padding:10px 12px;border-radius:10px;margin-bottom:12px;font-size:14px;display:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.w{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;background:var(--bg)}
+.w .hz{font-size:30px;line-height:1.2}
+.w .py{color:var(--red);font-size:15px}
+.w .uz{color:var(--mut);font-size:13px}
+.hide-py .py{visibility:hidden}.hide-uz .uz{visibility:hidden}
+.hide-py .w:hover .py,.hide-uz .w:hover .uz{visibility:visible}
+.c{cursor:pointer;border-radius:4px;transition:background .15s}
+.c:hover{background:rgba(200,16,46,.15)}
+.btn{border:0;background:var(--red);color:#fff;padding:7px 12px;border-radius:10px;cursor:pointer;font-size:14px}
+.btn.alt{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.btn.sm{padding:3px 9px;font-size:13px;margin-top:4px}
+.ph{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;gap:10px;align-items:center;justify-content:space-between}
+.ph:last-child{border:0}
+.ph .hz{font-size:22px}.ph .py{color:var(--red);font-size:14px}.ph .uz{color:var(--mut);font-size:14px}
+.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok)}
+.weeks{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.wk{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg)}
+.wk.done{border-color:var(--ok)}
+.wk b{color:var(--red)}
+.tone{display:flex;gap:8px;flex-wrap:wrap}
+.pb{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:8px 10px;cursor:pointer;text-align:center;min-width:62px}
+.pb:hover{border-color:var(--red)}
+.pb .a{font-size:17px;font-weight:600;color:var(--red)}.pb .e{font-size:20px}
+input,select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:15px}
+#wbox{width:260px;height:260px;border:2px solid var(--line);border-radius:12px;background:var(--card);margin:8px 0;
+background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:130px 130px}
+.chs{display:flex;flex-wrap:wrap;gap:6px;max-height:220px;overflow:auto;margin-top:8px}
+.chs button{font-size:22px;width:44px;height:44px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;cursor:pointer}
+.chs button.on{background:var(--red);color:#fff}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;font-size:16px;cursor:pointer}
+.opt.ok{background:var(--ok);color:#fff}.opt.bad{background:var(--bad);color:#fff}
+.big{font-size:48px;text-align:center}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.note{background:rgba(224,165,38,.15);border-left:4px solid var(--gold);padding:8px 12px;border-radius:6px;font-size:14px;margin:8px 0}
+.mut{color:var(--mut);font-size:13px}
+
+.memg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.mc{min-height:84px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;font-size:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px;text-align:center}
+.mc.on{background:var(--card);border-color:var(--red)}
+.mc.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.mc .mh{font-size:28px;line-height:1.2}.mc.ok .py{color:#fff}
+.tile{width:54px;height:54px;font-size:26px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;cursor:pointer}
+.tile:disabled{opacity:.3;cursor:default}.tile.on{background:var(--red);color:#fff}
+.ansrow{display:flex;gap:6px;flex-wrap:wrap;min-height:68px;padding:8px;border:2px dashed var(--line);border-radius:12px;margin:8px 0}
+.gstat{display:flex;gap:16px;font-size:17px;font-weight:600;margin-bottom:8px;flex-wrap:wrap}
+
+.farea{position:relative;height:360px;overflow:hidden;border:2px solid var(--line);border-radius:12px;background:linear-gradient(var(--card),var(--bg))}
+.farea::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--red)}
+.fall{position:absolute;width:30%;display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:4px 2px;cursor:pointer;will-change:top}
+.fall .fh{font-size:26px;line-height:1.2}.fall .fp{font-size:11px;color:var(--red)}
+.fall.bad{background:var(--bad);color:#fff}.fall.good{background:var(--ok);color:#fff}
+.fall.bad .fp,.fall.good .fp{color:#fff}
+.ftarget{font-size:18px;text-align:center;padding:8px;background:rgba(224,165,38,.15);border-radius:10px;margin-bottom:8px}
+
+.lane{position:relative;height:56px;border-bottom:3px dashed var(--line);margin:4px 0 10px}
+.car{position:absolute;bottom:2px;font-size:34px;transition:left .35s ease;display:inline-block;transform:scaleX(-1)}
+.flag{position:absolute;right:0;bottom:2px;font-size:30px}
+.lname{font-size:12px;color:var(--mut)}
+.arena{cursor:crosshair}.arena::after{display:none}
+.sbar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin-bottom:8px}
+.sbar i{display:block;height:100%;width:100%;background:var(--gold)}
+.en{position:absolute;width:29%;display:flex;flex-direction:column;align-items:center;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:4px;cursor:crosshair}
+.en .ee{font-size:26px;line-height:1.1}.en .fh{font-size:24px;line-height:1.1}.en .fp{font-size:11px;color:var(--red)}
+.en.good{background:var(--ok);color:#fff;border-color:var(--ok)}.en.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.en.good .fp,.en.bad .fp{color:#fff}
+</style>
+</head>
+<body>
+<header>
+  <h1>🇨🇳 汉语 · Xitoy tilini 3 oyda o'rganing</h1>
+  <div class="sp">🔊 Tezlik <input id="rate" type="range" min="0.5" max="1.1" step="0.1" value="0.8" style="width:90px"></div>
+</header>
+<nav id="nav"></nav>
+<main>
+  <div class="warn" id="warn">⚠️ Qurilmangizda xitoycha ovoz topilmadi. Telefon: Sozlamalar → Til va kiritish → Matnni ovozga aylantirish → Xitoy tilini yuklab oling. Kompyuter: Chrome yoki Edge brauzeridan foydalaning.</div>
+  <div id="view"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+<script>
+/* ---------------- MA'LUMOTLAR ---------------- */
+// so'z: "xitoycha|pinyin|o'zbekcha"
+const W=[
+{t:"Pinyin va birinchi so'zlar",g:"Xitoy tilida fe'l zamonga qarab o'zgarmaydi. Eng muhimi – 4 ta ton (mā má mǎ mà): ton o'zgarsa, ma'no o'zgaradi. 不 (bù) 4-ton oldida bú bo'ladi: 不是 bú shì.",
+w:["你|nǐ|sen","我|wǒ|men","他|tā|u (erkak)","她|tā|u (ayol)","好|hǎo|yaxshi","你好|nǐ hǎo|salom","谢谢|xièxie|rahmat","不客气|bú kèqi|arzimaydi","再见|zàijiàn|xayr","对不起|duìbuqǐ|kechirasiz","没关系|méi guānxi|hechqisi yo'q","请|qǐng|iltimos","是|shì|-dir, bo'lmoq","不|bù|yo'q, emas","学生|xuésheng|o'quvchi, talaba"],
+p:["你好！|Nǐ hǎo!|Salom!","谢谢你。|Xièxie nǐ.|Sizga rahmat.","再见！|Zàijiàn!|Xayr!","对不起。|Duìbuqǐ.|Kechirasiz.","我是学生。|Wǒ shì xuésheng.|Men talabaman."]},
+{t:"Tanishuv",g:"Gap tuzilishi: Ega + Fe'l + To'ldiruvchi (o'zbekchadan farqli, fe'l o'rtada). So'roq gap: oxiriga 吗 (ma) qo'shiladi. 我很好 – 'Yaxshiman' (很 – 'juda', lekin odatda oddiy bog'lovchi).",
+w:["我们|wǒmen|biz","名字|míngzi|ism","叫|jiào|atalmoq","什么|shénme|nima","谁|shéi|kim","吗|ma|so'roq yuklamasi","呢|ne|-chi? (qaytarma so'roq)","很|hěn|juda","也|yě|ham","都|dōu|hammasi","人|rén|odam","国|guó|davlat","哪|nǎ|qaysi","中国|Zhōngguó|Xitoy","乌兹别克斯坦|Wūzībiékèsītǎn|O'zbekiston","老师|lǎoshī|o'qituvchi","朋友|péngyou|do'st","高兴|gāoxìng|xursand"],
+p:["你叫什么名字？|Nǐ jiào shénme míngzi?|Ismingiz nima?","我叫阿里。|Wǒ jiào Ālǐ.|Mening ismim Ali.","你好吗？|Nǐ hǎo ma?|Yaxshimisiz?","我很好，你呢？|Wǒ hěn hǎo, nǐ ne?|Yaxshiman, o'zingiz-chi?","你是哪国人？|Nǐ shì nǎ guó rén?|Siz qaysi davlatdansiz?","我是乌兹别克斯坦人。|Wǒ shì Wūzībiékèsītǎn rén.|Men o'zbekistonlikman.","认识你很高兴。|Rènshi nǐ hěn gāoxìng.|Siz bilan tanishganimdan xursandman."]},
+{t:"Sonlar",g:"11–19: 十 + son (十一=11). 20, 30...: son + 十 (二十=20). 25 = 二十五. Ikki sanoqda 二 emas, ko'pincha 两 (liǎng) ishlatiladi: 两个人. Sanash uchun o'lchov so'zi kerak: 三个人 (uch kishi).",
+w:["零|líng|0","一|yī|1","二|èr|2","三|sān|3","四|sì|4","五|wǔ|5","六|liù|6","七|qī|7","八|bā|8","九|jiǔ|9","十|shí|10","百|bǎi|100","两|liǎng|ikki (sanoqda)","个|gè|o'lchov so'zi (umumiy)","有|yǒu|bor","几|jǐ|nechta (kichik son)","多少|duōshao|qancha"],
+p:["一二三四五六七八九十。|Yī èr sān sì wǔ liù qī bā jiǔ shí.|Birdan o'ngacha.","我有三个朋友。|Wǒ yǒu sān gè péngyou.|Mening uchta do'stim bor.","十一|Shíyī|O'n bir (11)","二十五|Èrshíwǔ|Yigirma besh (25)","一百零一|Yībǎi líng yī|Bir yuz bir (101)"]},
+{t:"Oila",g:"Egalik: 的 (de) – '-ning'. 我的家 = mening uyim. Yaqin qarindoshlarda 的 tushib qolishi mumkin: 我爸爸. 'Bor' 有, 'yo'q' 没有 (méiyǒu).",
+w:["爸爸|bàba|dada","妈妈|māma|ona","哥哥|gēge|aka","姐姐|jiějie|opa","弟弟|dìdi|uka","妹妹|mèimei|singil","儿子|érzi|o'g'il","女儿|nǚ'ér|qiz farzand","爷爷|yéye|bobo","奶奶|nǎinai|buvi","孩子|háizi|bola","家|jiā|uy, oila","的|de|-ning (egalik)","这|zhè|bu","口|kǒu|oila a'zosi hisobi"],
+p:["这是我的家。|Zhè shì wǒ de jiā.|Bu mening oilam.","他是我爸爸。|Tā shì wǒ bàba.|U mening dadam.","我有一个哥哥。|Wǒ yǒu yí gè gēge.|Mening bitta akam bor.","你家有几口人？|Nǐ jiā yǒu jǐ kǒu rén?|Oilangizda necha kishi?","我家有五口人。|Wǒ jiā yǒu wǔ kǒu rén.|Oilamizda besh kishi bor."]},
+{t:"Ovqat va ichimlik",g:"想 (xiǎng) – 'xohlamoq/o'ylamoq', 要 (yào) – 'kerak/xohlamoq' (qat'iyroq). 了 (le) – ish bajarilganini yoki holat o'zgarganini bildiradi: 我饿了.",
+w:["吃|chī|yemoq","喝|hē|ichmoq","水|shuǐ|suv","茶|chá|choy","饭|fàn|ovqat","米饭|mǐfàn|guruch (osh)","面条|miàntiáo|lag'mon, makaron","肉|ròu|go'sht","鸡蛋|jīdàn|tuxum","苹果|píngguǒ|olma","面包|miànbāo|non","牛奶|niúnǎi|sut","想|xiǎng|xohlamoq","要|yào|kerak, xohlamoq","好吃|hǎochī|mazali","饿|è|och","渴|kě|chanqagan","杯|bēi|piyola, stakan"],
+p:["我想吃米饭。|Wǒ xiǎng chī mǐfàn.|Men guruch yemoqchiman.","你想喝什么？|Nǐ xiǎng hē shénme?|Nima ichmoqchisiz?","我要一杯茶。|Wǒ yào yì bēi chá.|Menga bir piyola choy.","这个很好吃！|Zhè ge hěn hǎochī!|Bu juda mazali!","我饿了。|Wǒ è le.|Men ochman."]},
+{t:"Vaqt va sana",g:"Vaqt so'zi gapda fe'ldan OLDIN turadi: 我明天去 (men ertaga boraman). Sana: yil 年, oy 月, kun 号. Oy raqami + 月: 三月 = mart. Hafta kunlari: 星期 + son (星期一 dushanba ... 星期天 yakshanba).",
+w:["今天|jīntiān|bugun","明天|míngtiān|ertaga","昨天|zuótiān|kecha","现在|xiànzài|hozir","点|diǎn|soat","分|fēn|daqiqa","年|nián|yil","月|yuè|oy","号|hào|kun (sana)","星期|xīngqī|hafta","早上|zǎoshang|ertalab","下午|xiàwǔ|tushdan keyin","晚上|wǎnshang|kechqurun","什么时候|shénme shíhou|qachon","星期一|xīngqīyī|dushanba","星期五|xīngqīwǔ|juma","星期天|xīngqītiān|yakshanba"],
+p:["现在几点？|Xiànzài jǐ diǎn?|Hozir soat nechi?","现在三点。|Xiànzài sān diǎn.|Hozir soat uch.","今天几月几号？|Jīntiān jǐ yuè jǐ hào?|Bugun oyning nechasi?","今天星期五。|Jīntiān xīngqīwǔ.|Bugun juma.","明天见！|Míngtiān jiàn!|Ertagacha!"]},
+{t:"Xarid va pul",g:"Narx so'rash: 多少钱? Pul birligi: 块 (kuài, so'zlashuvda) = 元 (yuán). 太...了 – 'juda ...': 太贵了. Ko'rsatish: 这个 (bu), 那个 (u).",
+w:["钱|qián|pul","块|kuài|yuan (pul birligi)","买|mǎi|sotib olmoq","卖|mài|sotmoq","贵|guì|qimmat","便宜|piányi|arzon","大|dà|katta","小|xiǎo|kichik","多|duō|ko'p","少|shǎo|oz","商店|shāngdiàn|do'kon","衣服|yīfu|kiyim","这个|zhège|bu","那个|nàge|u","可以|kěyǐ|mumkin","太|tài|juda, o'ta"],
+p:["这个多少钱？|Zhège duōshao qián?|Bu qancha turadi?","太贵了！|Tài guì le!|Juda qimmat!","便宜一点儿，可以吗？|Piányi yìdiǎnr, kěyǐ ma?|Birozgina arzonroq, mumkinmi?","我想买这个。|Wǒ xiǎng mǎi zhège.|Men buni sotib olmoqchiman.","我不要，谢谢。|Wǒ bú yào, xièxie.|Kerak emas, rahmat."]},
+{t:"Transport va yo'l so'rash",g:"Joylashuv: 在 (zài) – '-da': 我在家. Yo'nalish: 往左走 (chapga yuring). Masofa: A 离 B 远/近 – A B dan uzoq/yaqin.",
+w:["去|qù|bormoq","来|lái|kelmoq","在|zài|-da, bo'lmoq","哪里|nǎlǐ|qayerda","左|zuǒ|chap","右|yòu|o'ng","前|qián|old","后|hòu|orqa","地铁|dìtiě|metro","出租车|chūzūchē|taksi","火车站|huǒchēzhàn|vokzal","机场|jīchǎng|aeroport","走|zǒu|yurmoq, ketmoq","远|yuǎn|uzoq","近|jìn|yaqin","厕所|cèsuǒ|hojatxona","离|lí|dan (masofa)","往|wǎng|tomon"],
+p:["厕所在哪里？|Cèsuǒ zài nǎlǐ?|Hojatxona qayerda?","我想去机场。|Wǒ xiǎng qù jīchǎng.|Men aeroportga bormoqchiman.","往左走。|Wǎng zuǒ zǒu.|Chapga yuring.","离这儿远吗？|Lí zhèr yuǎn ma?|Bu yerdan uzoqmi?","请问，地铁站在哪儿？|Qǐngwèn, dìtiězhàn zài nǎr?|Kechirasiz, metro bekati qayerda?"]},
+{t:"Kundalik harakatlar",g:"会 (huì) – o'rganib bilmoq: 我会说汉语. 在 + fe'l – hozir bajarilayotgan ish: 我在学习. 不 – hozir/kelasi uchun inkor; 没 – o'tgan va 'bor' uchun inkor.",
+w:["起床|qǐchuáng|turmoq","睡觉|shuìjiào|uxlamoq","工作|gōngzuò|ishlamoq, ish","学习|xuéxí|o'rganmoq","说|shuō|gapirmoq","看|kàn|qaramoq","听|tīng|tinglamoq","写|xiě|yozmoq","读|dú|o'qimoq","会|huì|bilmoq, qila olmoq","汉语|Hànyǔ|xitoy tili","喜欢|xǐhuan|yoqtirmoq","爱|ài|sevmoq","做|zuò|qilmoq","住|zhù|yashamoq","知道|zhīdào|bilmoq","书|shū|kitob"],
+p:["我在学习汉语。|Wǒ zài xuéxí Hànyǔ.|Men xitoy tilini o'rganyapman.","我会说一点儿汉语。|Wǒ huì shuō yìdiǎnr Hànyǔ.|Men ozgina xitoycha gapira olaman.","我喜欢看书。|Wǒ xǐhuan kàn shū.|Men kitob o'qishni yoqtiraman.","请再说一遍。|Qǐng zài shuō yí biàn.|Iltimos, yana bir marta ayting.","我不知道。|Wǒ bù zhīdào.|Men bilmayman."]},
+{t:"Sifatlar, his-tuyg'u, ob-havo",g:"Sifat bilan odatda 很 ishlatiladi: 很冷, 很累. Taqqoslash: A 比 B + sifat (我比他高 – men undan balandman). 得 (de) – harakat qanday bajarilishini bildiradi: 你说得对.",
+w:["天气|tiānqì|ob-havo","热|rè|issiq","冷|lěng|sovuq","下雨|xiàyǔ|yomg'ir yog'moq","好看|hǎokàn|chiroyli (ko'rinish)","漂亮|piàoliang|go'zal","累|lèi|charchagan","忙|máng|band","难过|nánguò|xafa","快|kuài|tez","慢|màn|sekin","新|xīn|yangi","对|duì|to'g'ri","健康|jiànkāng|sog'lik","爱好|àihào|hobbi","外面|wàimiàn|tashqari"],
+p:["今天天气很好。|Jīntiān tiānqì hěn hǎo.|Bugun ob-havo juda yaxshi.","外面很冷。|Wàimiàn hěn lěng.|Tashqarida sovuq.","我今天很累。|Wǒ jīntiān hěn lèi.|Bugun juda charchadim.","请说慢一点儿。|Qǐng shuō màn yìdiǎnr.|Iltimos, sekinroq gapiring.","你说得对。|Nǐ shuō de duì.|To'g'ri aytdingiz."]},
+{t:"Sayohat, mehmonxona, shifoxona",g:"Iltimos va yordam so'rash: 请 + fe'l (请给我...), 我需要... 'Menga ... kerak'. Kasallik: 我 + a'zo + og'riq: 我头疼. 给 (gěi) – bermoq.",
+w:["酒店|jiǔdiàn|mehmonxona","房间|fángjiān|xona","护照|hùzhào|pasport","医院|yīyuàn|kasalxona","医生|yīshēng|shifokor","药|yào|dori","头疼|tóuténg|bosh og'rig'i","帮助|bāngzhù|yordam","警察|jǐngchá|politsiya","手机|shǒujī|telefon","饭店|fàndiàn|restoran","菜单|càidān|menyu","买单|mǎidān|hisob (to'lov)","预订|yùdìng|bron qilmoq","问题|wèntí|savol, muammo","需要|xūyào|kerak bo'lmoq","给|gěi|bermoq"],
+p:["我预订了一个房间。|Wǒ yùdìng le yí gè fángjiān.|Men xona bron qilganman.","我需要帮助。|Wǒ xūyào bāngzhù.|Menga yordam kerak.","我头疼。|Wǒ tóuténg.|Boshim og'riyapti.","请给我菜单。|Qǐng gěi wǒ càidān.|Menyuni bering.","买单，谢谢。|Mǎidān, xièxie.|Hisobni keltiring, rahmat."]},
+{t:"Suhbat va takrorlash",g:"Bog'lovchilar: 因为...所以... (chunki... shuning uchun), 虽然...但是... (garchi... lekin). 吧 (ba) – taklif: 我们走吧! Tushunmasangiz: 我听不懂 – va 请再说一遍.",
+w:["因为|yīnwèi|chunki","所以|suǒyǐ|shuning uchun","但是|dànshì|lekin","和|hé|va","还|hái|yana, hali","已经|yǐjīng|allaqachon","以后|yǐhòu|keyin","以前|yǐqián|oldin","觉得|juéde|o'ylamoq, his qilmoq","希望|xīwàng|umid qilmoq","一起|yìqǐ|birga","当然|dāngrán|albatta","开始|kāishǐ|boshlamoq","努力|nǔlì|harakat qilmoq","明白|míngbai|tushunmoq","欢迎|huānyíng|xush kelibsiz","吧|ba|-ayliq (taklif)"],
+p:["我听不懂。|Wǒ tīng bu dǒng.|Tushunmadim.","我明白了。|Wǒ míngbai le.|Tushundim.","我们一起去吧！|Wǒmen yìqǐ qù ba!|Birga boraylik!","因为我喜欢中国，所以学习汉语。|Yīnwèi wǒ xǐhuan Zhōngguó, suǒyǐ xuéxí Hànyǔ.|Xitoyni yoqtirganim uchun xitoy tilini o'rganyapman.","我想在中国工作。|Wǒ xiǎng zài Zhōngguó gōngzuò.|Men Xitoyda ishlamoqchiman."]}
+];
+const PARSED=W.map((x,i)=>({i:i+1,t:x.t,g:x.g,w:x.w.map(s=>{const a=s.split("|");return{h:a[0],p:a[1],u:a[2],wk:i+1}}),p:x.p.map(s=>{const a=s.split("|");return{h:a[0],p:a[1],u:a[2]}})}));
+const ALLW=PARSED.flatMap(x=>x.w);
+
+const INIT=[["b","爸","bà"],["p","怕","pà"],["m","妈","mā"],["f","发","fā"],["d","大","dà"],["t","他","tā"],["n","你","nǐ"],["l","来","lái"],["g","哥","gē"],["k","看","kàn"],["h","喝","hē"],["j","家","jiā"],["q","七","qī"],["x","西","xī"],["zh","这","zhè"],["ch","吃","chī"],["sh","是","shì"],["r","人","rén"],["z","做","zuò"],["c","菜","cài"],["s","三","sān"],["y","有","yǒu"],["w","我","wǒ"]];
+const FIN=[["a","他","tā"],["o","我","wǒ"],["e","喝","hē"],["i","你","nǐ"],["u","不","bù"],["ü","女","nǚ"],["ai","爱","ài"],["ei","黑","hēi"],["ao","好","hǎo"],["ou","手","shǒu"],["an","三","sān"],["en","人","rén"],["ang","上","shàng"],["eng","冷","lěng"],["ong","中","zhōng"],["ia","家","jiā"],["ie","谢","xiè"],["iao","小","xiǎo"],["iu","六","liù"],["ian","年","nián"],["in","心","xīn"],["iang","想","xiǎng"],["ing","请","qǐng"],["ua","花","huā"],["uo","多","duō"],["uai","快","kuài"],["ui","水","shuǐ"],["uan","玩","wán"],["un","春","chūn"],["üe","月","yuè"]];
+const TONES=[["mā","妈","1-ton: yuqori, tekis","ona"],["má","麻","2-ton: ko'tariluvchi","kanop"],["mǎ","马","3-ton: pastga-yuqoriga","ot"],["mà","骂","4-ton: keskin pasayuvchi","so'kmoq"],["ma","吗","yengil ton","so'roq yuklamasi"]];
+
+/* pinyin xaritasi: hanzi -> pinyin (har bir belgi uchun) */
+const PYMAP={};
+(function(){
+  const re=/(?:[zcs]h?|[bpmfdtnlgkhjqxrwy])?[aeiouüāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]+(?:ng?|r)?/gi;
+  function addPair(h,p){
+    p=p.replace(/'/g," ").replace(/[.,!?，。！？]/g," ").toLowerCase();
+    const hz=[...h].filter(c=>/[\u4e00-\u9fff]/.test(c));
+    const sy=p.split(/\s+/).filter(Boolean).flatMap(t=>t.match(re)||[]);
+    if(hz.length===sy.length)hz.forEach((c,i)=>{if(!PYMAP[c])PYMAP[c]=sy[i]});
+  }
+  ALLW.forEach(w=>{if([...w.h].length===1)PYMAP[w.h]=w.p.split(" ")[0]});
+  ALLW.forEach(w=>addPair(w.h,w.p));
+  PARSED.forEach(x=>x.p.forEach(s=>addPair(s.h,s.p)));
+})();
+
+/* ---------------- YORDAMCHILAR ---------------- */
+const $=s=>document.querySelector(s);
+const hz=t=>t.replace(/[\u4e00-\u9fff]/g,c=>`<span class="c">${c}</span>`);
+let voice=null;
+function pickVoice(){
+  if(!("speechSynthesis" in window))return;
+  const vs=speechSynthesis.getVoices();
+  voice=vs.find(v=>/zh[-_]CN/i.test(v.lang))||vs.find(v=>v.lang.toLowerCase().startsWith("zh"))||null;
+  $("#warn").style.display=(vs.length&&!voice)?"block":"none";
+}
+if("speechSynthesis" in window){speechSynthesis.onvoiceschanged=pickVoice;pickVoice();setTimeout(pickVoice,1200)}
+function say(t){
+  if(!("speechSynthesis" in window)){alert("Brauzeringiz ovoz chiqarishni qo'llamaydi. Chrome yoki Edge'ni sinab ko'ring.");return}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);u.lang="zh-CN";if(voice)u.voice=voice;u.rate=parseFloat($("#rate").value);
+  speechSynthesis.speak(u);
+}
+document.addEventListener("click",e=>{
+  const c=e.target.closest(".c");if(c){say(c.textContent);return}
+  const s=e.target.closest("[data-say]");if(s){say(s.dataset.say)}
+});
+function store(k,v){try{if(v===undefined){return JSON.parse(localStorage.getItem(k))}localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+let done=store("xt_done")||{};
+let state={tab:"plan",week:1,hidePy:false,hideUz:false};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* ---------------- NAVIGATSIYA ---------------- */
+const TABS=[["plan","📅 Reja"],["pinyin","🔤 Pinyin va ohang"],["lesson","📖 Darslar"],["write","✍️ Yozish"],["dict","📚 Lug'at"],["quiz","🎯 Mashq"],["game","🎮 O'yinlar"]];
+function renderNav(){
+  $("#nav").innerHTML=TABS.map(t=>`<button class="${state.tab===t[0]?"on":""}" data-tab="${t[0]}">${t[1]}</button>`).join("");
+}
+$("#nav").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(b)go(b.dataset.tab)});
+function go(t,w){state.tab=t;if(w)state.week=w;renderNav();render();window.scrollTo(0,0)}
+function render(){({plan,pinyin,lesson,write,dict,quiz,game})[state.tab]()}
+
+/* ---------------- REJA ---------------- */
+function plan(){
+  const n=Object.keys(done).filter(k=>done[k]).length;
+  const months=[["1-oy: Poydevor (pinyin, ohang, asosiy gaplar)",[1,2,3,4]],["2-oy: Kundalik hayot (ovqat, vaqt, xarid, yo'l)",[5,6,7,8]],["3-oy: Suhbat (fe'llar, his-tuyg'u, sayohat, bog'lash)",[9,10,11,12]]];
+  $("#view").innerHTML=`
+  <div class="card"><h2>Xush kelibsiz! 欢迎！</h2>
+    <p>Bu ilova sizni 12 hafta (3 oy) ichida noldan boshlab <b>gapirish, tinglash va yozishga</b> o'rgatadi. Har bir xitoycha belgi ustiga bossangiz – uning o'qilishi eshitiladi.</p>
+    <div class="note">Haqiqiy kutilma: 3 oyda kuniga ~45 daqiqa shug'ullansangiz, taxminan <b>200 ta so'z</b> va 60 dan ortiq ibora va kundalik muloqot (HSK 1 darajasiga yaqin) ni o'zlashtirasiz. Ravon, erkin gaplashish uchun keyin ham davom etish kerak bo'ladi.</div>
+    <h3>Progress: ${n}/12 hafta</h3><div class="bar"><i style="width:${n/12*100}%"></i></div>
+  </div>
+  <div class="card"><h2>Kunlik reja (~45 daqiqa)</h2>
+    <ol>
+      <li><b>10 daqiqa – Tinglash va takrorlash:</b> yangi so'zlarni bosing, eshiting va ovoz chiqarib 3 marta takrorlang (aynan ohang bilan!).</li>
+      <li><b>10 daqiqa – Yangi so'zlar:</b> «Darslar» bo'limidan bugungi so'zlar.</li>
+      <li><b>10 daqiqa – Yozish:</b> «Yozish» bo'limida kuniga 5 ta belgini chizib mashq qiling.</li>
+      <li><b>10 daqiqa – Mashq va o'yin:</b> «Mashq» (test, tinglab topish) va «O'yinlar» (juftlik topish, tez javob, gap tuzish).</li>
+      <li><b>5 daqiqa – Gapirish:</b> iboralarni baland ovozda ayting, o'zingiz haqingizda 3 ta gap tuzing.</li>
+    </ol>
+    <p class="mut">Maslahat: pinyin yoki tarjimani yashirib («Darslar» ichida) o'zingizni sinab ko'ring.</p>
+  </div>
+  ${months.map(m=>`<div class="card"><h2>${m[0]}</h2><div class="weeks">${m[1].map(i=>{const x=PARSED[i-1];return `<div class="wk ${done[i]?"done":""}"><b>${i}-hafta</b> ${done[i]?"✅":""}<br>${x.t}<div class="mut">${x.w.length} so'z · ${x.p.length} ibora</div><div class="row" style="margin-top:8px"><button class="btn sm" onclick="go('lesson',${i})">Boshlash</button><label class="mut"><input type="checkbox" ${done[i]?"checked":""} onchange="toggleDone(${i},this.checked)"> tugatdim</label></div></div>`}).join("")}</div></div>`).join("")}`;
+}
+function toggleDone(i,v){done[i]=v;store("xt_done",done);plan()}
+
+/* ---------------- PINYIN ---------------- */
+function pinyin(){
+  $("#view").innerHTML=`
+  <div class="card"><h2>1. To'rt ton + yengil ton</h2>
+    <p>Xitoy tilida bir bo'g'in ohangga qarab turli ma'no beradi. Bosing va eshiting:</p>
+    <div class="tone">${TONES.map(t=>`<div class="pb" data-say="${t[1]}"><div class="a">${t[0]}</div><div class="e">${t[1]}</div><div class="mut">${t[2]}<br>${t[3]}</div></div>`).join("")}</div>
+    <div class="note">Ohang belgilari: ˉ (1-ton), ˊ (2-ton), ˇ (3-ton), ˋ (4-ton). 3-ton ketma-ket kelsa, birinchisi 2-tonga aylanadi: 你好 nǐ hǎo → ní hǎo.</div>
+  </div>
+  <div class="card"><h2>2. Undoshlar (声母)</h2><p>Har bir katak ostidagi belgi shu tovush bilan boshlanadi. Bosing va eshiting.</p>
+    <div class="tone">${INIT.map(t=>`<div class="pb" data-say="${t[1]}"><div class="a">${t[0]}</div><div class="e">${t[1]}</div><div class="mut">${t[2]}</div></div>`).join("")}</div>
+    <h3>O'zbek tiliga o'xshamaydiganlar</h3>
+    <ul><li><b>q</b> – 'ch' ga o'xshash, lekin til pastda, nafas bilan (qī)</li><li><b>x</b> – 'sh' va 's' o'rtasida, yumshoq (xī)</li><li><b>j</b> – yumshoq 'dj' (jiā)</li><li><b>zh, ch, sh, r</b> – til uchi ko'tarilgan holda (zhè, chī, shì, rén)</li><li><b>z, c, s</b> – 'dz', 'ts', 's' (zuò, cài, sān)</li></ul>
+  </div>
+  <div class="card"><h2>3. Unlilar (韵母)</h2>
+    <div class="tone">${FIN.map(t=>`<div class="pb" data-say="${t[1]}"><div class="a">${t[0]}</div><div class="e">${t[1]}</div><div class="mut">${t[2]}</div></div>`).join("")}</div>
+    <div class="note"><b>ü</b> – 'u' deb og'iz yumaloq, lekin 'i' deb ayting (o'zbekcha 'yü' kabi). <b>e</b> – 'ə' ga o'xshash, o'zbekcha 'e' emas.</div>
+  </div>
+  <div class="card"><h2>4. Yozuv asoslari</h2>
+    <ul><li>Xitoy yozuvi alifbo emas, <b>iyeroglif</b> (汉字). Har belgi – bir bo'g'in.</li>
+    <li>Chiziqlar tartibi: <b>yuqoridan pastga, chapdan o'ngga</b>; avval gorizontal, keyin vertikal; ichkarini yopishdan oldin ichini yozing.</li>
+    <li>«Yozish» bo'limida har bir belgining chiziq tartibini animatsiyada ko'rasiz va o'zingiz chizib sinaysiz.</li></ul>
+    <button class="btn" onclick="go('write')">Yozishga o'tish ✍️</button>
+  </div>`;
+}
+
+/* ---------------- DARSLAR ---------------- */
+function lesson(){
+  const x=PARSED[state.week-1];
+  $("#view").innerHTML=`
+  <div class="card"><div class="row"><b>Hafta:</b>
+    <select id="wsel">${PARSED.map(p=>`<option value="${p.i}" ${p.i===state.week?"selected":""}>${p.i}. ${p.t}</option>`).join("")}</select>
+    <label class="mut"><input type="checkbox" id="hp" ${state.hidePy?"checked":""}> pinyinni yashirish</label>
+    <label class="mut"><input type="checkbox" id="hu" ${state.hideUz?"checked":""}> tarjimani yashirish</label></div></div>
+  <div class="card"><h2>${x.i}-hafta: ${x.t}</h2><div class="note"><b>Grammatika:</b> ${x.g}</div></div>
+  <div class="card ${state.hidePy?"hide-py":""} ${state.hideUz?"hide-uz":""}"><h2>So'zlar (${x.w.length})</h2>
+    <p class="mut">Belgi ustiga bossangiz – shu belgi, tugmani bossangiz – butun so'z eshitiladi.</p>
+    <div class="grid">${x.w.map(w=>`<div class="w"><div class="hz">${hz(w.h)}</div><div class="py">${w.p}</div><div class="uz">${w.u}</div><button class="btn sm" data-say="${w.h}">🔊</button></div>`).join("")}</div>
+  </div>
+  <div class="card ${state.hidePy?"hide-py":""} ${state.hideUz?"hide-uz":""}"><h2>Iboralar – gapirishni mashq qiling</h2>
+    ${x.p.map(p=>`<div class="ph"><div><div class="hz">${hz(p.h)}</div><div class="py">${p.p}</div><div class="uz">${p.u}</div></div><button class="btn" data-say="${p.h}">🔊</button></div>`).join("")}
+  </div>
+  <div class="card"><div class="row"><button class="btn" onclick="startQuiz(${x.i})">🎯 Shu hafta bo'yicha mashq</button>
+  <button class="btn alt" onclick="writeWeek(${x.i})">✍️ Shu haftaning belgilarini yozish</button>
+  <button class="btn alt" onclick="G.upto=${x.i};go('game')">🎮 Shu hafta o'yini</button>
+  <label class="mut"><input type="checkbox" ${done[x.i]?"checked":""} onchange="toggleDone2(${x.i},this.checked)"> Haftani tugatdim</label></div></div>`;
+  $("#wsel").onchange=e=>{state.week=+e.target.value;lesson()};
+  $("#hp").onchange=e=>{state.hidePy=e.target.checked;lesson()};
+  $("#hu").onchange=e=>{state.hideUz=e.target.checked;lesson()};
+}
+function toggleDone2(i,v){done[i]=v;store("xt_done",done)}
+
+/* ---------------- YOZISH ---------------- */
+let wrState={week:0,ch:null,writer:null};
+function charsOf(week){
+  const src=week?[PARSED[week-1]]:PARSED;
+  const seen=new Set(),out=[];
+  src.forEach(x=>{x.w.forEach(w=>[...w.h].forEach(c=>{if(!seen.has(c)){seen.add(c);out.push(c)}}));x.p.forEach(p=>[...p.h].forEach(c=>{if(/[\u4e00-\u9fff]/.test(c)&&!seen.has(c)){seen.add(c);out.push(c)}}))});
+  return out;
+}
+function writeWeek(i){wrState.week=i;go("write")}
+function write(){
+  const chars=charsOf(wrState.week);
+  if(!wrState.ch||!chars.includes(wrState.ch))wrState.ch=chars[0];
+  $("#view").innerHTML=`
+  <div class="card"><h2>Yozishni o'rganing</h2>
+    <div class="row"><b>Belgilar:</b><select id="wk"><option value="0">Hammasi</option>${PARSED.map(p=>`<option value="${p.i}" ${wrState.week===p.i?"selected":""}>${p.i}-hafta</option>`).join("")}</select></div>
+    <div class="chs" id="chs">${chars.map(c=>`<button class="${c===wrState.ch?"on":""}" data-ch="${c}">${c}</button>`).join("")}</div>
+  </div>
+  <div class="card"><h2 id="winfo"></h2>
+    <div id="wbox"></div>
+    <div class="row"><button class="btn" id="b1">▶ Chiziq tartibi</button><button class="btn" id="b2">✏️ O'zim yozaman</button><button class="btn alt" id="b3">💡 Ko'rsatma</button><button class="btn alt" id="b4">🔊 Eshitish</button></div>
+    <p class="mut" id="wmsg">«O'zim yozaman» ni bosing va belgini chiziq-chiziq chizing. Xato bo'lsa, ilova ko'rsatadi.</p>
+  </div>`;
+  $("#wk").onchange=e=>{wrState.week=+e.target.value;wrState.ch=null;write()};
+  $("#chs").onclick=e=>{const b=e.target.closest("[data-ch]");if(!b)return;wrState.ch=b.dataset.ch;document.querySelectorAll("#chs button").forEach(x=>x.classList.toggle("on",x===b));loadChar()};
+  $("#b4").onclick=()=>say(wrState.ch);
+  loadChar();
+}
+function loadChar(){
+  const c=wrState.ch;const single=ALLW.find(w=>w.h===c);
+  $("#winfo").innerHTML=`<span style="font-size:34px">${c}</span> <span style="color:var(--red)">${PYMAP[c]||""}</span> <span class="mut">${single?"— "+single.u:""}</span>`;
+  const box=$("#wbox");box.innerHTML="";
+  if(typeof HanziWriter==="undefined"){$("#wmsg").textContent="Chiziq animatsiyasi uchun internet kerak (HanziWriter yuklanmadi).";return}
+  const w=HanziWriter.create("wbox",c,{width:256,height:256,padding:12,showOutline:true,strokeAnimationSpeed:1,delayBetweenStrokes:250,strokeColor:"#c8102e",outlineColor:"#cfc6b8",drawingColor:"#222",onLoadCharDataError:()=>{$("#wmsg").textContent="Bu belgi ma'lumoti yuklanmadi (internetni tekshiring)."}});
+  wrState.writer=w;
+  $("#b1").onclick=()=>{w.cancelQuiz();w.showOutline();w.animateCharacter();say(c)};
+  $("#b2").onclick=()=>{$("#wmsg").textContent="Birinchi chiziqdan boshlab chizing…";w.quiz({onMistake:s=>{$("#wmsg").textContent="❌ Xato, qayta urinib ko'ring (chiziq №"+(s.strokeNum+1)+")"},onCorrectStroke:s=>{$("#wmsg").textContent="✅ To'g'ri! "+(s.strokesRemaining?"Yana "+s.strokesRemaining+" ta chiziq":"")},onComplete:()=>{$("#wmsg").textContent="🎉 Ofarin! Belgi tayyor.";say(c)}})};
+  let outl=true;
+  $("#b3").textContent="💡 Kontur: yoqilgan";
+  $("#b3").onclick=()=>{outl=!outl;outl?w.showOutline():w.hideOutline();$("#b3").textContent="💡 Kontur: "+(outl?"yoqilgan":"o'chirilgan")};
+}
+
+/* ---------------- LUG'AT ---------------- */
+function dict(){
+  $("#view").innerHTML=`<div class="card"><h2>Lug'at (${ALLW.length} so'z)</h2>
+  <div class="row"><input id="q" placeholder="Qidirish: 你好 / nihao / salom" style="flex:1;min-width:200px"><select id="f"><option value="0">Barcha haftalar</option>${PARSED.map(p=>`<option value="${p.i}">${p.i}-hafta</option>`).join("")}</select></div></div>
+  <div class="card"><div id="dl"></div></div>`;
+  const upd=()=>{
+    const q=$("#q").value.trim().toLowerCase(),f=+$("#f").value;
+    const norm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s/g,"");
+    const r=ALLW.filter(w=>(!f||w.wk===f)&&(!q||w.h.includes(q)||norm(w.p).includes(norm(q))||w.u.toLowerCase().includes(q)));
+    $("#dl").innerHTML=r.length?r.map(w=>`<div class="ph"><div><span class="hz">${hz(w.h)}</span> <span class="py">${w.p}</span><div class="uz">${w.u} <span class="mut">· ${w.wk}-hafta</span></div></div><button class="btn" data-say="${w.h}">🔊</button></div>`).join(""):"<p class='mut'>Hech narsa topilmadi.</p>";
+  };
+  $("#q").oninput=upd;$("#f").onchange=upd;upd();
+}
+
+/* ---------------- MASHQ ---------------- */
+let Q={mode:"zh2uz",upto:12,score:0,total:0,cur:null,answered:false};
+function startQuiz(upto){Q.upto=upto;Q.score=0;Q.total=0;state.tab="quiz";renderNav();quiz()}
+function quiz(){
+  $("#view").innerHTML=`<div class="card"><h2>Mashq</h2>
+  <div class="row"><select id="qm"><option value="zh2uz">汉字 → o'zbekcha</option><option value="uz2zh">O'zbekcha → 汉字</option><option value="listen">🔊 Tinglab toping</option></select>
+  <select id="qu">${PARSED.map(p=>`<option value="${p.i}" ${p.i===Q.upto?"selected":""}>1–${p.i} haftalar</option>`).join("")}</select>
+  <span class="mut" id="sc"></span></div></div><div class="card" id="qa"></div>`;
+  $("#qm").value=Q.mode;
+  $("#qm").onchange=e=>{Q.mode=e.target.value;Q.score=0;Q.total=0;nextQ()};
+  $("#qu").onchange=e=>{Q.upto=+e.target.value;Q.score=0;Q.total=0;nextQ()};
+  nextQ();
+}
+function nextQ(){
+  const pool=ALLW.filter(w=>w.wk<=Q.upto);
+  const cur=pool[Math.floor(Math.random()*pool.length)];
+  const wrong=shuffle(ALLW.filter(w=>w.h!==cur.h&&w.u!==cur.u)).slice(0,3);
+  const opts=shuffle([cur,...wrong]);
+  Q.cur=cur;Q.answered=false;
+  $("#sc").textContent=`Natija: ${Q.score}/${Q.total}`;
+  let prompt="";
+  if(Q.mode==="zh2uz")prompt=`<div class="big">${hz(cur.h)}</div><div class="py" style="text-align:center;color:var(--red)">${cur.p}</div>`;
+  else if(Q.mode==="uz2zh")prompt=`<div class="big" style="font-size:30px">${cur.u}</div>`;
+  else prompt=`<div class="big">🔊</div><div class="mut" style="text-align:center">Eshiting va to'g'ri tarjimani tanlang</div><div style="text-align:center"><button class="btn" data-say="${cur.h}">Qayta eshitish</button></div>`;
+  $("#qa").innerHTML=prompt+`<div id="op">${opts.map((o,i)=>`<button class="opt" data-i="${i}">${Q.mode==="uz2zh"?`<span style="font-size:22px">${o.h}</span> <span class="mut">${o.p}</span>`:o.u}</button>`).join("")}</div><div id="fb"></div>`;
+  $("#op").onclick=e=>{
+    const b=e.target.closest(".opt");if(!b||Q.answered)return;Q.answered=true;Q.total++;
+    const ok=opts[+b.dataset.i].h===cur.h;if(ok)Q.score++;
+    b.classList.add(ok?"ok":"bad");
+    document.querySelectorAll(".opt").forEach((x,i)=>{if(opts[i].h===cur.h)x.classList.add("ok")});
+    $("#fb").innerHTML=`<p>${ok?"✅ To'g'ri!":"❌ Xato."} <b>${cur.h}</b> (${cur.p}) – ${cur.u}</p><button class="btn" id="nx">Keyingisi →</button>`;
+    $("#nx").onclick=nextQ;$("#sc").textContent=`Natija: ${Q.score}/${Q.total}`;say(cur.h);
+  };
+  if(Q.mode==="listen")say(cur.h);
+}
+
+/* ---------------- O'YINLAR ---------------- */
+const isHz=c=>/[一-鿿]/.test(c);
+let G={upto:12,timer:null};
+function best(k,v,low){
+  const b=store("xt_best")||{};
+  if(v===undefined)return b[k];
+  if(b[k]===undefined||(low?v<b[k]:v>b[k])){b[k]=v;store("xt_best",b);return true}
+  return false;
+}
+function gShell(){
+  clearInterval(G.timer);cancelAnimationFrame(G.raf);
+  $("#view").innerHTML=`<div class="card"><div class="row"><button class="btn alt sm" onclick="game()">← Menyu</button></div><div id="gb"></div></div>`;
+}
+function game(){
+  clearInterval(G.timer);cancelAnimationFrame(G.raf);
+  const bm=best("mem"),bs=best("speed"),bb=best("build"),bf=best("fall"),br=best("race"),bk=best("strike");
+  $("#view").innerHTML=`<div class="card"><h2>🎮 Lug'at o'yinlari</h2>
+  <div class="row"><b>So'zlar:</b><select id="gu">${PARSED.map(p=>`<option value="${p.i}" ${p.i===G.upto?"selected":""}>1–${p.i} haftalar</option>`).join("")}</select></div>
+  <p class="mut">O'yin faqat tanlangan haftalargacha bo'lgan so'zlardan tuziladi. Yangi so'zlarni o'yin orqali yodlang!</p></div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr))">
+    <div class="card"><h3>🃏 Juftlik topish</h3><p class="mut">12 ta kartadan xitoycha so'z va uning tarjimasini juftlab toping. Kam yurish – ko'p yulduz.</p><button class="btn" onclick="gMem()">O'ynash</button><p class="mut">Rekord: ${bm!==undefined?bm+" yurish":"—"}</p></div>
+    <div class="card"><h3>⚡ Tez javob</h3><p class="mut">60 soniya, 3 ta jon. To'g'ri javoblar ketma-ket bo'lsa, ball ko'payadi.</p><button class="btn" onclick="gSpeed()">O'ynash</button><p class="mut">Rekord: ${bs!==undefined?bs+" ball":"—"}</p></div>
+    <div class="card"><h3>🧩 Gap tuzish</h3><p class="mut">Aralash belgilardan to'g'ri xitoycha gapni yig'ing. Tarjima ko'rsatiladi.</p><button class="btn" onclick="gBuild()">O'ynash</button><p class="mut">Rekord: ${bb!==undefined?bb+" ta":"—"}</p></div>
+    <div class="card"><h3>🚀 Tushayotgan so'zlar</h3><p class="mut">Tepadan so'zlar tushadi. Tepadagi tarjimaga mos xitoycha so'zni yerga tushmasdan bosing! Tezlik oshib boradi.</p><button class="btn" onclick="gFall()">O'ynash</button><p class="mut">Rekord: ${bf!==undefined?bf+" ball":"—"}</p></div>
+    <div class="card"><h3>🏎️ Poyga</h3><p class="mut">Raqib bilan poyga! To'g'ri javob – mashina oldinga. Finishga birinchi keling.</p><button class="btn" onclick="gRace()">O'ynash</button><p class="mut">Rekord: ${br!==undefined?br+" soniya":"—"}</p></div>
+    <div class="card"><h3>🎯 Strike</h3><p class="mut">12 raund. Dushmanlar orasidan tarjimaga mos so'zni tez otib tushiring. Qanchalik tez – shunchalik ko'p ball.</p><button class="btn" onclick="gStrike()">O'ynash</button><p class="mut">Rekord: ${bk!==undefined?bk+" ball":"—"}</p></div>
+  </div>`;
+  $("#gu").onchange=e=>{G.upto=+e.target.value};
+}
+
+/* 1) Juftlik topish */
+function gMem(){
+  gShell();
+  const pool=shuffle(ALLW.filter(w=>w.wk<=G.upto)).slice(0,6);
+  const cards=shuffle(pool.flatMap((w,k)=>[{k,t:"zh",w,on:false,ok:false},{k,t:"uz",w,on:false,ok:false}]));
+  let open=[],moves=0,matched=0,lock=false;const t0=Date.now();
+  const draw=()=>{
+    $("#gb").innerHTML=`<div class="gstat"><span>👣 ${moves}</span><span>✅ ${matched}/6</span></div><div class="memg">${cards.map((c,i)=>{
+      const sh=c.on||c.ok;
+      return `<button class="mc ${sh?"on":""} ${c.ok?"ok":""}" data-i="${i}">${sh?(c.t==="zh"?`<span class="mh">${c.w.h}</span><span class="py">${c.w.p}</span>`:`<span>${c.w.u}</span>`):"❔"}</button>`;
+    }).join("")}</div>`;
+  };
+  const finish=()=>{
+    const sec=Math.round((Date.now()-t0)/1000);
+    const stars=moves<=9?3:moves<=13?2:1;
+    const nb=best("mem",moves,true);
+    setTimeout(()=>{
+      if(!$("#gb"))return;
+      $("#gb").innerHTML=`<h2>🎉 Ofarin!</h2><p>${moves} yurish · ${sec} soniya</p><div class="big">${"⭐".repeat(stars)}</div><p>${nb?"🏆 Yangi rekord!":"Rekord: "+best("mem")+" yurish"}</p><div class="row"><button class="btn" onclick="gMem()">Qayta o'ynash</button><button class="btn alt" onclick="game()">Menyu</button></div>`;
+    },700);
+  };
+  draw();
+  $("#gb").onclick=e=>{
+    const b=e.target.closest(".mc");if(!b||lock)return;
+    const c=cards[+b.dataset.i];if(c.on||c.ok)return;
+    c.on=true;open.push(c);if(c.t==="zh")say(c.w.h);
+    if(open.length<2){draw();return}
+    moves++;const a=open[0],d=open[1];
+    if(a.k===d.k){a.ok=d.ok=true;a.on=d.on=false;matched++;open=[];draw();say(a.w.h);if(matched===6)finish()}
+    else{lock=true;draw();setTimeout(()=>{a.on=d.on=false;open=[];lock=false;if($("#gb"))draw()},900)}
+  };
+}
+
+/* 2) Tez javob (60 soniya) */
+function gSpeed(){
+  gShell();
+  const pool=ALLW.filter(w=>w.wk<=G.upto);
+  let score=0,streak=0,lives=3,time=60,lock=false,over=false,cur=null,opts=[];
+  const head=()=>`<div class="gstat"><span>⏱ <span id="tm">${time}</span></span><span>❤️ ${lives}</span><span>⭐ ${score}</span><span>🔥 ${streak}</span></div>`;
+  const ask=()=>{
+    if(!$("#gb")||over)return;
+    cur=pool[Math.floor(Math.random()*pool.length)];
+    opts=shuffle([cur,...shuffle(pool.filter(w=>w.h!==cur.h&&w.u!==cur.u)).slice(0,3)]);
+    lock=false;
+    $("#gb").innerHTML=head()+`<div class="big">${hz(cur.h)}</div><div style="text-align:center;color:var(--red)">${cur.p}</div><div>${opts.map((o,i)=>`<button class="opt" data-i="${i}">${o.u}</button>`).join("")}</div>`;
+    say(cur.h);
+  };
+  const end=()=>{
+    if(over||!$("#gb"))return;over=true;clearInterval(G.timer);
+    const nb=score>0&&best("speed",score);
+    $("#gb").innerHTML=`<h2>⏱ O'yin tugadi!</h2><div class="gstat"><span>⭐ ${score} ball</span></div><p>${nb?"🏆 Yangi rekord!":"Rekord: "+(best("speed")||0)+" ball"}</p><div class="row"><button class="btn" onclick="gSpeed()">Qayta o'ynash</button><button class="btn alt" onclick="game()">Menyu</button></div>`;
+  };
+  ask();
+  $("#gb").onclick=e=>{
+    const b=e.target.closest(".opt");if(!b||lock||over)return;lock=true;
+    const ok=opts[+b.dataset.i].h===cur.h;
+    if(ok){streak++;score+=10+Math.min(streak,10)}else{lives--;streak=0}
+    b.classList.add(ok?"ok":"bad");
+    document.querySelectorAll("#gb .opt").forEach((x,i)=>{if(opts[i].h===cur.h)x.classList.add("ok")});
+    const st=document.querySelector("#gb .gstat");if(st)st.outerHTML=head();
+    setTimeout(()=>{if(over)return;if(lives<=0)end();else ask()},ok?400:1000);
+  };
+  G.timer=setInterval(()=>{
+    const el=$("#tm");if(!el){clearInterval(G.timer);return}
+    time--;el.textContent=time;if(time<=0)end();
+  },1000);
+}
+
+/* 3) Gap tuzish */
+function gBuild(){
+  gShell();
+  const pool=PARSED.filter(x=>x.i<=G.upto).flatMap(x=>x.p).filter(p=>[...p.h].filter(isHz).length>=3);
+  let score=0,total=0,cur,target,tiles,ans,done,counted,hint,fb;
+  const draw=()=>{
+    if(!$("#gb"))return;
+    $("#gb").innerHTML=`<div class="gstat"><span>⭐ ${score}/${total}</span></div>
+    <p style="font-size:18px;margin:6px 0"><b>${cur.u}</b></p>
+    <p class="py" style="min-height:22px;color:var(--red)">${hint?cur.p:""}</p>
+    <div class="ansrow">${ans.map((t,k)=>`<button class="tile on" data-a="${k}">${t.c}</button>`).join("")}</div>
+    <div class="row" style="margin:8px 0">${tiles.map(t=>`<button class="tile" data-t="${t.i}" ${t.used?"disabled":""}>${t.c}</button>`).join("")}</div>
+    <div style="min-height:44px">${fb}</div>
+    <div class="row"><button class="btn alt" data-act="hint">💡 Pinyin</button><button class="btn alt" data-act="clear">🔄 Tozalash</button><button class="btn alt" data-say="${cur.h}">🔊</button><button class="btn" data-act="next">Keyingisi →</button></div>`;
+  };
+  const next=()=>{
+    cur=pool[Math.floor(Math.random()*pool.length)];
+    target=[...cur.h].filter(isHz);
+    tiles=shuffle(target.map((c,i)=>({c,i,used:false})));
+    ans=[];done=false;counted=false;hint=false;fb="";draw();
+  };
+  const check=()=>{
+    const ok=ans.map(t=>t.c).join("")===target.join("");
+    if(!counted){counted=true;total++;if(ok)score++}
+    if(ok){
+      done=true;fb=`<p>✅ To'g'ri! <b>${cur.h}</b><br><span class="py">${cur.p}</span></p>`;say(cur.h);
+      if(score>0)best("build",score);
+    }else fb="<p>❌ Tartib noto'g'ri. Belgini bosib olib tashlang yoki «Tozalash».</p>";
+  };
+  next();
+  $("#gb").onclick=e=>{
+    const x=e.target.closest("[data-act]");
+    if(x){
+      const k=x.dataset.act;
+      if(k==="hint"){hint=true;draw()}
+      else if(k==="clear"&&!done){tiles.forEach(t=>t.used=false);ans=[];fb="";draw()}
+      else if(k==="next"){if(!counted){counted=true;total++}next()}
+      return;
+    }
+    if(done)return;
+    const a=e.target.closest("[data-a]");
+    if(a){const o=ans.splice(+a.dataset.a,1)[0];o.used=false;fb="";draw();return}
+    const t=e.target.closest("[data-t]");
+    if(t){
+      const o=tiles.find(z=>z.i===+t.dataset.t);if(!o||o.used)return;
+      o.used=true;ans.push(o);fb="";say(o.c);
+      if(ans.length===target.length)check();
+      draw();
+    }
+  };
+}
+
+/* 4) Tushayotgan so'zlar (arkada) */
+function gFall(){
+  gShell();
+  const pool=ALLW.filter(w=>w.wk<=G.upto&&[...w.h].length<=4);
+  let score=0,lives=3,level=1,solved=0,over=false,target=null,items=[],last=0,spawnT=0,H=360,uid=0;
+  $("#gb").innerHTML=`<div class="gstat"><span>❤️ <span id="fl">3</span></span><span>⭐ <span id="fs">0</span></span><span>🚀 <span id="fv">1</span></span></div><div class="ftarget" id="ft"></div><div class="farea" id="fa"></div>`;
+  const area=$("#fa");
+  const upd=()=>{$("#fl").textContent=lives;$("#fs").textContent=score;$("#fv").textContent=level};
+  const pickTarget=()=>{
+    let w;do{w=pool[Math.floor(Math.random()*pool.length)]}while(target&&w.h===target.h&&pool.length>1);
+    target=w;$("#ft").innerHTML=`Toping: <b>${target.u}</b>`;
+  };
+  const distractor=()=>{
+    const c=pool.filter(w=>w.h!==target.h&&w.u!==target.u);
+    return c[Math.floor(Math.random()*c.length)];
+  };
+  const spawn=w=>{
+    const free=[0,1,2].filter(l=>!items.some(it=>it.lane===l&&it.y<85));
+    if(!free.length)return false;
+    const lane=free[Math.floor(Math.random()*free.length)];
+    const el=document.createElement("button");
+    el.className="fall";el.innerHTML=`<span class="fh">${w.h}</span><span class="fp">${w.p}</span>`;
+    el.style.left=(3+lane*33.5)+"%";el.style.top="-70px";
+    area.appendChild(el);items.push({el,w,lane,y:-70});
+    return true;
+  };
+  const drop=(it,cls)=>{
+    items=items.filter(x=>x!==it);
+    if(cls){it.el.classList.add(cls);setTimeout(()=>it.el.remove(),200)}else it.el.remove();
+  };
+  const end=()=>{
+    if(over)return;over=true;cancelAnimationFrame(G.raf);
+    if(!$("#gb"))return;
+    const nb=score>0&&best("fall",score);
+    $("#gb").innerHTML=`<h2>🚀 O'yin tugadi!</h2><div class="gstat"><span>⭐ ${score} ball</span><span>Daraja ${level}</span></div><p>${nb?"🏆 Yangi rekord!":"Rekord: "+(best("fall")||0)+" ball"}</p><div class="row"><button class="btn" onclick="gFall()">Qayta o'ynash</button><button class="btn alt" onclick="game()">Menyu</button></div>`;
+  };
+  const lose=()=>{lives--;upd();if(lives<=0){end();return true}return false};
+  const loop=ts=>{
+    if(over||!document.body.contains(area))return;
+    if(!last)last=ts;
+    const dt=Math.min(0.05,(ts-last)/1000);last=ts;
+    const speed=45+level*12;
+    items.forEach(it=>{it.y+=speed*dt;it.el.style.top=it.y+"px"});
+    spawnT+=dt;
+    if(spawnT>=Math.max(0.9,1.8-level*0.1)){
+      const hasT=items.some(it=>it.w.h===target.h);
+      if(spawn((!hasT||Math.random()<0.3)?target:distractor()))spawnT=0;
+    }
+    for(const it of items.slice()){
+      if(it.y>H-55){
+        drop(it);
+        if(it.w.h===target.h&&!items.some(x=>x.w.h===target.h)){
+          if(lose())return;
+          pickTarget();
+        }
+      }
+    }
+    G.raf=requestAnimationFrame(loop);
+  };
+  area.onclick=e=>{
+    const b=e.target.closest(".fall");if(!b||over)return;
+    const it=items.find(x=>x.el===b);if(!it)return;
+    if(it.w.h===target.h){
+      score+=10+level*2;solved++;if(solved%5===0)level++;
+      drop(it,"good");say(it.w.h);pickTarget();upd();
+    }else{
+      drop(it,"bad");lose();
+    }
+  };
+  pickTarget();spawn(target);
+  G.raf=requestAnimationFrame(loop);
+}
+
+/* 5) Poyga */
+function gRace(){
+  gShell();
+  const pool=ALLW.filter(w=>w.wk<=G.upto);
+  $("#gb").innerHTML=`<h3>🏎️ Poyga</h3><p class="mut">Har to'g'ri javob mashinangizni oldinga siljitadi (10 ta to'g'ri javob = finish). Xato javob orqaga tortadi. Raqib to'xtamay yuradi – birinchi bo'lib finishga keling!</p><div class="row"><b>Qiyinlik:</b><select id="rl"><option value="1.1">Oson</option><option value="1.6" selected>O'rtacha</option><option value="2.2">Qiyin</option></select><button class="btn" id="rs">🏁 Start</button></div>`;
+  const start=sp=>{
+    let me=0,bot=0,over=false,lock=false,cur=null,opts=[];const t0=Date.now();
+    $("#gb").innerHTML=`<div class="lname">Siz</div><div class="lane"><span class="car" id="c1">🏎️</span><span class="flag">🏁</span></div><div class="lname">Raqib</div><div class="lane"><span class="car" id="c2">🚗</span><span class="flag">🏁</span></div><div id="rq"></div>`;
+    const pos=()=>{const a=$("#c1"),b=$("#c2");if(a)a.style.left=(me*0.88)+"%";if(b)b.style.left=(bot*0.88)+"%"};
+    const end=win=>{
+      if(over)return;over=true;clearInterval(G.timer);
+      if(!$("#gb"))return;
+      const sec=Math.round((Date.now()-t0)/1000);
+      const nb=win&&best("race",sec,true);
+      $("#gb").innerHTML=`<h2>${win?"🏆 G'alaba!":"😅 Raqib g'olib bo'ldi"}</h2><p>${win?sec+" soniyada finishga yetdingiz.":"Yana urinib ko'ring – so'zlarni takrorlab keling!"}</p><p>${nb?"🥇 Yangi rekord!":(best("race")!==undefined?"Rekord: "+best("race")+" soniya":"")}</p><div class="row"><button class="btn" onclick="gRace()">Qayta o'ynash</button><button class="btn alt" onclick="game()">Menyu</button></div>`;
+    };
+    const ask=()=>{
+      if(!$("#rq")||over)return;
+      cur=pool[Math.floor(Math.random()*pool.length)];
+      opts=shuffle([cur,...shuffle(pool.filter(w=>w.h!==cur.h&&w.u!==cur.u)).slice(0,3)]);
+      lock=false;
+      $("#rq").innerHTML=`<div class="big">${hz(cur.h)}</div><div style="text-align:center;color:var(--red)">${cur.p}</div>${opts.map((o,i)=>`<button class="opt" data-i="${i}">${o.u}</button>`).join("")}`;
+      say(cur.h);
+    };
+    pos();ask();
+    $("#gb").onclick=e=>{
+      const b=e.target.closest(".opt");if(!b||lock||over)return;lock=true;
+      const ok=opts[+b.dataset.i].h===cur.h;
+      b.classList.add(ok?"ok":"bad");
+      document.querySelectorAll("#rq .opt").forEach((x,i)=>{if(opts[i].h===cur.h)x.classList.add("ok")});
+      if(ok)me=Math.min(100,me+10);else me=Math.max(0,me-4);
+      pos();
+      if(me>=100){setTimeout(()=>end(true),500);return}
+      setTimeout(ask,ok?450:1100);
+    };
+    G.timer=setInterval(()=>{
+      if(!$("#c2")){clearInterval(G.timer);return}
+      if(over)return;
+      bot=Math.min(100,bot+sp*0.2*(0.8+Math.random()*0.4));pos();
+      if(bot>=100)end(false);
+    },200);
+  };
+  $("#rs").onclick=()=>start(parseFloat($("#rl").value));
+}
+
+/* 6) Strike */
+function gStrike(){
+  gShell();
+  const pool=ALLW.filter(w=>w.wk<=G.upto&&[...w.h].length<=4);
+  const ROUNDS=12;
+  let round=0,score=0,lives=3,over=false,lock=true,target=null,t0=0,limit=6000;
+  $("#gb").innerHTML=`<div class="gstat"><span>🎯 <span id="sr">0</span>/${ROUNDS}</span><span>⭐ <span id="ss">0</span></span><span>❤️ <span id="sl">3</span></span></div><div class="ftarget" id="sm"></div><div class="sbar"><i id="sb"></i></div><div class="farea arena" id="sa"></div>`;
+  const upd=()=>{const a=$("#sr");if(!a)return;a.textContent=round;$("#ss").textContent=score;$("#sl").textContent=lives};
+  const reveal=()=>{document.querySelectorAll("#sa .en").forEach(x=>{if(x.dataset.h===target.h)x.classList.add("good")})};
+  const finish=()=>{
+    if(over)return;over=true;clearInterval(G.timer);
+    if(!$("#gb"))return;
+    const nb=score>0&&best("strike",score);
+    $("#gb").innerHTML=`<h2>🎯 Missiya tugadi!</h2><div class="gstat"><span>⭐ ${score} ball</span><span>Raund ${Math.min(round,ROUNDS)}/${ROUNDS}</span></div><p>${nb?"🏆 Yangi rekord!":"Rekord: "+(best("strike")||0)+" ball"}</p><div class="row"><button class="btn" onclick="gStrike()">Qayta o'ynash</button><button class="btn alt" onclick="game()">Menyu</button></div>`;
+  };
+  const nextRound=()=>{
+    if(over||!$("#sa"))return;
+    if(round>=ROUNDS||lives<=0){finish();return}
+    round++;
+    limit=Math.max(3500,6500-round*250);
+    target=pool[Math.floor(Math.random()*pool.length)];
+    const others=shuffle(pool.filter(w=>w.h!==target.h&&w.u!==target.u)).slice(0,4);
+    const cells=shuffle([0,1,2,3,4,5]).slice(0,5);
+    const ws=shuffle([target,...others]);
+    $("#sm").innerHTML=`🎯 Nishon: <b>${target.u}</b>`;
+    $("#sa").innerHTML=ws.map((w,i)=>{
+      const c=cells[i],l=[3,36.5,70][c%3],t=[4,52][Math.floor(c/3)];
+      return `<button class="en" data-h="${w.h}" style="left:${l}%;top:${t}%"><span class="ee">👾</span><span class="fh">${w.h}</span><span class="fp">${w.p}</span></button>`;
+    }).join("");
+    $("#sb").style.width="100%";
+    upd();t0=Date.now();lock=false;
+  };
+  $("#sa").onclick=e=>{
+    const b=e.target.closest(".en");if(!b||lock||over)return;lock=true;
+    if(b.dataset.h===target.h){
+      const left=Math.max(0,limit-(Date.now()-t0));
+      score+=10+Math.ceil(left/limit*10);
+      b.classList.add("good");b.querySelector(".ee").textContent="💥";say(target.h);upd();
+      setTimeout(nextRound,700);
+    }else{
+      lives--;b.classList.add("bad");b.querySelector(".ee").textContent="❌";reveal();upd();
+      setTimeout(nextRound,1100);
+    }
+  };
+  G.timer=setInterval(()=>{
+    const bar=$("#sb");if(!bar){clearInterval(G.timer);return}
+    if(lock||over)return;
+    const el=Date.now()-t0;
+    bar.style.width=Math.max(0,100-el/limit*100)+"%";
+    if(el>=limit){lock=true;lives--;upd();reveal();setTimeout(nextRound,1000)}
+  },100);
+  nextRound();
+}
+
+renderNav();render();
+</script>
+</body>
+</html>
